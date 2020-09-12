@@ -4,6 +4,13 @@ import { FormControl, Select, MenuItem } from "@material-ui/core";
 
 function App() {
   const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState("worldwide");
+
+  const onCountryChange = (event) => {
+    const countryCode = event.target.value;
+
+    setCountry(countryCode);
+  }
 
   useEffect(() => {
     const getCountriesData = async () => {
@@ -15,10 +22,10 @@ function App() {
               name: country.country, //United States, United Kingdom
               value: country.countryInfo.iso2 //usa, uk, fr,
             }
-          ))
-          setCountries(countries)
+          ));
+          setCountries(countries);
         })
-    }
+    };
     getCountriesData();
   }, []);
 
@@ -27,7 +34,8 @@ function App() {
       <div className="app__header">
         <h1>COVID-19 TRACKER</h1>
         <FormControl className="app__dropdown">
-          <Select variant="outlined" value="abc">
+          <Select variant="outlined" onChange={onCountryChange} value={country}>
+            <MenuItem value="worldwide">Worldwide</MenuItem>
             {
               countries.map(country => (
                 <MenuItem value={country.value}>{country.name}</MenuItem>
