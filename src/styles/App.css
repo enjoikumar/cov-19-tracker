@@ -17,10 +17,17 @@ body{
   justify-content: space-between;
   margin-bottom: 20px;
 }
-
+.app__header > h1{
+  color: #fc3c3c;
+  font-size: 2rem;
+}
 .app__stats{
   display: flex;
   justify-content: space-between;
+}
+
+.app__dropdown{
+  background-color: white;
 }
 
 .app__left{
@@ -29,6 +36,20 @@ body{
 
 .app__right{
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__right > hr{
+  margin-top: 20px;
+}
+
+.worldwide{
+  padding-top: 25px;
+}
+
+.app__graph{
+  flex-grow: 1;
 }
 
 @media (max-width: 786px){

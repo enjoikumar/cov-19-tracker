@@ -15,6 +15,9 @@
   border-color: red;
 }
 
+.infoBox__cases--green{
+  color: lightgreen !important;
+}
 
 
 .infoBox__cases{
