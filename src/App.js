@@ -14,6 +14,7 @@ function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
+  const [tableData, setTableData] = useState([]);
 
   const onCountryChange = async (event) => {
     const countryCode = event.target.value;
@@ -48,6 +49,8 @@ function App() {
             name: country.country, //United States, United Kingdom
             value: country.countryInfo.iso2, //usa, uk, fr,
           }));
+
+          setTableData(data);
           setCountries(countries);
         });
     };
@@ -82,7 +85,7 @@ function App() {
 
       <Card className="app__right">
         <h3>Live Cases by Country</h3>
-          <Table />
+          <Table countries={tableData} />
         <h3> Worldwide new cases</h3>
           <Graph />
       </Card>
