@@ -20,6 +20,7 @@ function App() {
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
   const [mapZoom, setMapZoom] = useState(2);
   const [mapCountries, setMapCountries] = useState([]);
+  const [casesType, setCasesType] = useState("cases");
 
   const onCountryChange = async (event) => {
     const countryCode = event.target.value;
@@ -82,14 +83,30 @@ function App() {
         </div>
 
         <div class="app__stats">
-          <InfoBox title="Coronavirus Cases" total={prettyPrintStat(countryInfo.cases)} cases={prettyPrintStat(countryInfo.todayCases)} />
+          <InfoBox
+            onClick={e => setCasesType('cases')}
+            title="Coronavirus Cases"
+            total={prettyPrintStat(countryInfo.cases)}
+            cases={prettyPrintStat(countryInfo.todayCases)}
+          />
 
-          <InfoBox title="Recovered" total={prettyPrintStat(countryInfo.recovered)} cases={prettyPrintStat(countryInfo.todayRecovered)}/>
+          <InfoBox
+            onClick={e => setCasesType('recovered')}
+            title="Recovered"
+            total={prettyPrintStat(countryInfo.recovered)}
+            cases={prettyPrintStat(countryInfo.todayRecovered)}
+          />
 
-          <InfoBox title="Deaths" total={prettyPrintStat(countryInfo.deaths)} cases={prettyPrintStat(countryInfo.todayDeaths)}/>
+          <InfoBox
+            onClick={e => setCasesType('deaths')}
+            title="Deaths"
+            total={prettyPrintStat(countryInfo.deaths)}
+            cases={prettyPrintStat(countryInfo.todayDeaths)}
+          />
         </div>
 
         <Map
+          casesType={casesType}
           countries={mapCountries}
           center={mapCenter}
           zoom={mapZoom}
@@ -99,8 +116,8 @@ function App() {
       <Card className="app__right">
         <h3>Live Cases by Country</h3>
           <Table countries={tableData} />
-        <h3> Worldwide new cases</h3>
-          <LineGraph />
+        <h3> Worldwide new {casesType}</h3>
+          <LineGraph casesType={casesType} />
       </Card>
 
     </div>
