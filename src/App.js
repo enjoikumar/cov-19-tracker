@@ -7,6 +7,7 @@ import Map from "./Components/Map";
 import Table from "./Components/Table";
 import LineGraph from "./Components/LineGraph";
 import { sortData } from "./util";
+import "leaflet/dist/leaflet.css";
 
 
 function App() {
@@ -14,6 +15,8 @@ function App() {
   const [country, setCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
+  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  const [mapZoom, setMapZoom] = useState(2);
 
   const onCountryChange = async (event) => {
     const countryCode = event.target.value;
@@ -25,9 +28,10 @@ function App() {
       .then(response => response.json())
       .then(data => {
         setCountry(countryCode);
-
-        // all the data from the country
         setCountryInfo(data);
+
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        setMapZoom(4);
       })
   };
 
@@ -80,7 +84,10 @@ function App() {
           <InfoBox title="Deaths" total={countryInfo.deaths} cases={countryInfo.todayDeaths}/>
         </div>
 
-        <Map />
+        <Map
+          center={mapCenter}
+          zoom={mapZoom}
+        />
       </div>
 
       <Card className="app__right">
