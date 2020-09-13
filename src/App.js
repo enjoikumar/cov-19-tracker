@@ -5,7 +5,7 @@ import { FormControl, Select, MenuItem, Card, CardContent, Typography } from "@m
 import InfoBox from "./Components/InfoBox";
 import Map from "./Components/Map";
 import Table from "./Components/Table";
-import Graph from "./Components/Graph";
+import LineGraph from "./Components/LineGraph";
 import { sortData } from "./util";
 
 
@@ -87,7 +87,7 @@ function App() {
         <h3>Live Cases by Country</h3>
           <Table countries={tableData} />
         <h3> Worldwide new cases</h3>
-          <Graph />
+          <LineGraph />
       </Card>
 
     </div>
