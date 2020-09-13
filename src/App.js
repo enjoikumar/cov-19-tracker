@@ -7,15 +7,37 @@ import Map from "./Components/Map";
 import Table from "./Components/Table";
 import Graph from "./Components/Graph";
 
+// https://disease.sh/v3/covid-19/all
+// https://disease.sh/v3/covid-19/countries/[COUNTY_CODE]
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState("worldwide");
+  const [countryInfo, setCountryInfo] = useState({});
 
-  const onCountryChange = (event) => {
+  const onCountryChange = async (event) => {
     const countryCode = event.target.value;
     setCountry(countryCode);
+
+    const url = countryCode === "worldwide" ? 'https://disease.sh/v3/covid-19/all' : `https://disease.sh/v3/covid-19/countries/${countryCode}`
+
+    await fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        setCountry(countryCode);
+
+        // all the data from the country
+        setCountryInfo(data);
+      })
   };
+
+  useEffect(() => {
+    fetch('https://disease.sh/v3/covid-19/all')
+      .then(response => response.json())
+      .then((data) => {
+        setCountryInfo(data)
+      })
+  }, [])
 
   useEffect(() => {
     const getCountriesData = async () => {
@@ -48,11 +70,11 @@ function App() {
         </div>
 
         <div class="app__stats">
-          <InfoBox title="Coronavirus Cases" total={2000} cases={123} />
+          <InfoBox title="Coronavirus Cases" total={countryInfo.cases} cases={countryInfo.todayCases} />
 
-          <InfoBox title="Recovered" total={3000} cases={124}/>
+          <InfoBox title="Recovered" total={countryInfo.recovered} cases={countryInfo.todayRecovered}/>
 
-          <InfoBox title="Deaths" total={4000} cases={125}/>
+          <InfoBox title="Deaths" total={countryInfo.deaths} cases={countryInfo.todayDeaths}/>
         </div>
 
         <Map />
