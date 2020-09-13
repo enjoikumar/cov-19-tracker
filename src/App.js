@@ -6,9 +6,8 @@ import InfoBox from "./Components/InfoBox";
 import Map from "./Components/Map";
 import Table from "./Components/Table";
 import Graph from "./Components/Graph";
+import { sortData } from "./util";
 
-// https://disease.sh/v3/covid-19/all
-// https://disease.sh/v3/covid-19/countries/[COUNTY_CODE]
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -38,7 +37,7 @@ function App() {
       .then((data) => {
         setCountryInfo(data)
       })
-  }, [])
+  }, []);
 
   useEffect(() => {
     const getCountriesData = async () => {
@@ -50,7 +49,8 @@ function App() {
             value: country.countryInfo.iso2, //usa, uk, fr,
           }));
 
-          setTableData(data);
+          const sortedData = sortData(data);
+          setTableData(sortedData);
           setCountries(countries);
         });
     };

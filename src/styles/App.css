@@ -28,7 +28,7 @@ body{
 }
 
 .app__right{
-  flex: 0.2;
+  padding: 10px;
 }
 
 @media (max-width: 786px){
